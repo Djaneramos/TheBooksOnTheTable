@@ -1,0 +1,20 @@
+<div>
+  <h2>Cadastre um novo livro</h2>
+  <div>
+    <label for="">N° De Identificação :</label>
+    <input type="text"[(ngModel)]="id">
+  </div>
+  <div>
+    <label for="">Titulo :</label>
+    <input type="text" [(ngModel)]="titulo">
+  </div>
+  <div>
+    <label for="">Autor :</label>
+    <input type="text"[(ngModel)]="autor">
+  </div>
+  <div>
+    <label for="">N° De Paginas :</label>
+    <input type="text"[(ngModel)]="npaginas">
+  </div>
+  <button (click)="cadastrar()"> Cadastrar  livro</button>
+</div>
