@@ -1,20 +1,21 @@
-<div>
+<mat-card>
   <h2>Cadastre um novo livro</h2>
-  <div>
-    <label for="">N° De Identificação :</label>
-    <input type="text"[(ngModel)]="id">
-  </div>
-  <div>
-    <label for="">Titulo :</label>
-    <input type="text" [(ngModel)]="titulo">
-  </div>
-  <div>
-    <label for="">Autor :</label>
-    <input type="text"[(ngModel)]="autor">
-  </div>
-  <div>
-    <label for="">N° De Paginas :</label>
-    <input type="text"[(ngModel)]="npaginas">
-  </div>
-  <button (click)="cadastrar()"> Cadastrar  livro</button>
-</div>
+  <mat-form-field>
+    <mat-label for="">N° De Identificação :</mat-label>
+    <input type="text" matInput [(ngModel)]="id">
+   </mat-form-field>
+    <mat-form-field>
+    <mat-label for="">Titulo :</mat-label>
+    <input type="text" matInput [(ngModel)]="titulo">
+   </mat-form-field>
+    <mat-form-field>
+    <mat-label for="">Autor :</mat-label>
+    <input type="text" matInput [(ngModel)]="autor">
+    </mat-form-field>
+    <mat-form-field>
+    <mat-label for="">N° De Paginas :</mat-label>
+    <input type="text" matInput [(ngModel)]="npaginas">
+    </mat-form-field>
+
+  <button (click)="OnLivroAdd()" color = 'primary' mat-raised-button> Cadastrar  livro</button>
+</mat-card>

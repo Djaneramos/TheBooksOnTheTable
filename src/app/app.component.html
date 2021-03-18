@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-bodyc></app-bodyc>
+<app-bodyc (livroAdd)='OnLivroAdd($event)'></app-bodyc>
 <h2>Livros</h2>
-<app-cardl></app-cardl>
+<app-cardl [collection]= 'collection'></app-cardl>
 

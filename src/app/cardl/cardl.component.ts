@@ -1,4 +1,5 @@
-import { Component} from '@angular/core';
+import { Component,Input} from '@angular/core';
+import {Book} from '../cardl/book.model';
 
 @Component({
   selector: 'app-cardl',
@@ -6,4 +7,5 @@ import { Component} from '@angular/core';
   styleUrls: ['./cardl.component.css']
 })
 export class CardlComponent  {
+  @Input() collection:Book[]=[]
 }

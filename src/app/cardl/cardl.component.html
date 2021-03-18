@@ -1,11 +1,12 @@
-<div>
-<div>
-  <h2>Livro</h2>
-  <p>Autor</p>
-  <p>n° de identi</p>
-  <p>n° de paginas</p>
-</div>
+<mat-accordion *ngIf='collection.length>0'>
+<mat-expansion-panel *ngFor='let livro of collection'>
+  <mat-expansion-panel-header>{{livro.titulo}}</mat-expansion-panel-header>
+  <p>Autor: {{livro.autor}}</p>
+  <p>n° de identificação:{{livro.id}}</p>
+  <p>n° de paginas:{{livro.npaginas}}</p>
+</mat-expansion-panel>
+<!--
+<div>imagem</div> -->
 
-<div>imagem</div>
-
-</div>
+</mat-accordion>
+<p class="mat-body" *ngIf='collection.length<=0'>Não há livros cadastrados!</p>
