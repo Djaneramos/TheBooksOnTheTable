@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Book} from './cardl/book.model';
+import {Livro} from './cardl/livro.model';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +8,9 @@ import {Book} from './cardl/book.model';
 })
 export class AppComponent {
   title = 'TheBooksOnTheTable';
-  collection:Book[]=[];
+  collection:Livro[]=[];
 
   OnLivroAdd(book){
-    this.collection=[...this.collection,book]
+    this.collection=[...this.collection,book];
   }
 }

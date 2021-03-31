@@ -1,12 +1,19 @@
 <mat-accordion *ngIf='collection.length>0'>
-<mat-expansion-panel *ngFor='let livro of collection'>
-  <mat-expansion-panel-header>{{livro.titulo}}</mat-expansion-panel-header>
-  <p>Autor: {{livro.autor}}</p>
-  <p>n° de identificação:{{livro.id}}</p>
-  <p>n° de paginas:{{livro.npaginas}}</p>
-</mat-expansion-panel>
-<!--
-<div>imagem</div> -->
+
+  <mat-expansion-panel *ngFor='let livro of collection'>
+
+    <mat-expansion-panel-header>{{livro.titulo}}</mat-expansion-panel-header>
+    <p>Autor: {{livro.autor}}</p>
+    <p>n° de identificação:{{livro.id}}</p>
+    <p>n° de paginas:{{livro.npaginas}}</p>
+
+    <mat-action-row>
+      <button mat-button color="primary">EDITAR</button>
+      <button mat-button color="warn">REMOVER</button>
+    </mat-action-row>
+
+  </mat-expansion-panel>
 
 </mat-accordion>
+
 <p class="mat-body" *ngIf='collection.length<=0'>Não há livros cadastrados!</p>

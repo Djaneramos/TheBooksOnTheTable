@@ -1,0 +1,9 @@
+mat-accordion {
+  width: 90%;
+  margin-bottom: 2rem;
+}
+
+mat-expansion-panel {
+  width: 100%;
+  margin: 1rem;
+}

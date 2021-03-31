@@ -1,26 +1,29 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Output,EventEmitter } from '@angular/core';
-import {Book} from '../cardl/book.model';
+import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { LivroService } from '../cardl/livro.service';
 
 @Component({
   selector: 'app-bodyc',
   templateUrl: './bodyc.component.html',
   styleUrls: ['./bodyc.component.css']
 })
-export class BodycComponent  {
-  @Output()livroAdd = new EventEmitter<Book>()
+export class BodycComponent {
 
-  id: string;
-  titulo:string;
-  autor: string;
-  npaginas: string;
-  OnLivroAdd(){
-    const livro:Book={
-      id:this.id,
-      titulo:this.titulo,
-      autor:this.autor,
-      npaginas:this.npaginas,
+  constructor(public livroService: LivroService) {}
+
+  OnLivroAdd(form: NgForm) {
+
+    if(form.invalid) {
+      return;
     }
-    this.livroAdd.emit(livro)
-}
+
+    this.livroService.adicionarLivro(
+      form.value.id,
+      form.value.titulo,
+      form.value.autor,
+      form.value.npaginas,
+    );
+
+    form.resetForm();
+  }
 }
