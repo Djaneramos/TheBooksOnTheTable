@@ -5,6 +5,7 @@ import{MatInputModule} from '@angular/material/input';
 import{MatCardModule}from'@angular/material/card';
 import{MatButtonModule} from '@angular/material/button';
 import{MatExpansionModule} from  '@angular/material/expansion';
+import{ HttpClientModule} from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -28,6 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatCardModule,
     MatButtonModule,
     MatExpansionModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
