@@ -21,7 +21,7 @@ export class CardlComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.collection = this.livroService.getLivros();
+    this.livroService.getLivros();
     this.collectionsSubscription = this.livroService
     .getListaDeLivrosAtualizadaObservable()
     .subscribe((collection: Livro[]) => {
