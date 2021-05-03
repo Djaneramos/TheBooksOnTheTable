@@ -28,5 +28,6 @@ export class CardlComponent implements OnInit, OnDestroy {
       this.collection = collection;
     });
   }
-
+  onDelete (id: string): void{
+    this.livroService.removerLivro(id);}
 }

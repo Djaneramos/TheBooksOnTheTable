@@ -8,3 +8,7 @@ app-cardl
   display: flex;
   justify-content: center;
 }
+app-header{
+ flex-direction: column;
+ text-decoration: none;
+}

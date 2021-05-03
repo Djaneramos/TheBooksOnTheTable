@@ -7,13 +7,14 @@ import{MatCardModule}from'@angular/material/card';
 import{MatButtonModule} from '@angular/material/button';
 import{MatExpansionModule} from  '@angular/material/expansion';
 import{ HttpClientModule} from '@angular/common/http'
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BodycComponent } from './bodyc/bodyc.component';
 import { CardlComponent } from './cardl/cardl.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { AppRoutingModule } from './app-routing.module';
 import { LivroService } from './cardl/livro.service';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { LivroService } from './cardl/livro.service';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
@@ -32,6 +34,7 @@ import { LivroService } from './cardl/livro.service';
     MatButtonModule,
     MatExpansionModule,
     HttpClientModule,
+    MatToolbarModule,
   ],
   providers: [LivroService],
   bootstrap: [AppComponent]

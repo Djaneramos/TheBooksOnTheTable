@@ -1,4 +1,8 @@
 mat-card {
   width: 90%;
   margin: 10px auto;
+  display: block;
+}
+  mat-toolbar a{
+  color:black;
 }

@@ -1,3 +1,3 @@
 module.exports = {
-  mongoPassword: "mongoo"
+  mongoPassword: "Djane"
 }
