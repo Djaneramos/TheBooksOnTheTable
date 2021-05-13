@@ -8,3 +8,11 @@ form, mat-card {
   display: flex;
   flex-direction: column;
 }
+
+mat-spinner {
+  margin: auto;
+}
+
+input[type="file"] {
+  visibility: hidden;
+}

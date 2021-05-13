@@ -1,33 +1,39 @@
 <mat-card>
   <h2>Cadastre um novo livro</h2>
 
-  <form (submit)="OnLivroAdd(livroForm)" #livroForm="ngForm">
+  <mat-spinner *ngIf="estaCarregando"></mat-spinner>
+  <form [formGroup]="form" (submit)="OnSalvarLivro()" *ngIf="!estaCarregando">
 
     <mat-form-field>
       <mat-label for="">N° De Identificação :</mat-label>
-      <input type="text" required minlength="4" matInput name="id" ngModel #id="ngModel">
+      <input type="text" required matInput name="id">
     </mat-form-field>
     <!-- <mat-error *ngIf="id.invalid">Digite um id válido de 4 digitos</mat-error> -->
 
+    <div>
+      <button mat-stroked-button type="button" (click)="selecionaArquivo.click()">Selecionar Imagem</button>
+      <input type="file" #selecionaArquivo>
+    </div>
+
     <mat-form-field>
       <mat-label for="">Titulo :</mat-label>
-      <input type="text" required matInput name="titulo" ngModel #titulo="ngModel">
+      <input type="text" required matInput formControlName="titulo" name="titulo">
     </mat-form-field>
     <!-- <mat-error *ngIf="titulo.invalid">Digite um titulo válido</mat-error> -->
 
     <mat-form-field>
       <mat-label for="">Autor :</mat-label>
-      <input type="text" required matInput name="autor" ngModel #autor="ngModel">
+      <input type="text" required matInput formControlName="autor" name="autor">
     </mat-form-field>
     <!-- <mat-error *ngIf="autor.invalid">Digite um nome válido</mat-error> -->
 
     <mat-form-field>
       <mat-label for="">N° De Paginas :</mat-label>
-      <input type="text" required matInput name="npaginas" ngModel #npaginas="ngModel">
+      <input type="text" required matInput formControlName="npaginas" name="npaginas">
     </mat-form-field>
     <!-- <mat-error *ngIf="npaginas.invalid">Digite um numero válido</mat-error> -->
 
-    <button color='primary' mat-raised-button> Cadastrar  livro</button>
+    <button color='accent' mat-raised-button>Salvar livro</button>
 
   </form>
 

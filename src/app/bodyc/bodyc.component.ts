@@ -1,29 +1,90 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Livro } from '../cardl/livro.model';
 import { LivroService } from '../cardl/livro.service';
 
 @Component({
   selector: 'app-bodyc',
   templateUrl: './bodyc.component.html',
-  styleUrls: ['./bodyc.component.css']
+  styleUrls: ['./bodyc.component.css'],
 })
-export class BodycComponent {
+export class BodycComponent implements OnInit {
 
-  constructor(public livroService: LivroService) {}
+  private modo: string = "criar";
+  private idLivro: string;
+  public livro: Livro;
+  public estaCarregando: boolean = false;
+  form: FormGroup;
 
-  OnLivroAdd(form: NgForm) {
+  ngOnInit() {
+    this.form = new FormGroup({
+      titulo: new FormControl (null, {
+        validators: [Validators.required, Validators.minLength(3)]
+      }),
+      autor: new FormControl (null, {
+        validators: [Validators.required]
+      }),
+      npaginas: new FormControl (null, {
+        validators: [Validators.required]
+      })
+    })
 
-    if(form.invalid) {
-      return;
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has("idLivro")){
+        this.modo = "editar";
+        this.idLivro = paramMap.get("idLivro");
+        this.estaCarregando = true;
+        //this.livro = this.livroService.getLivro(this.idLivro);
+        this.livroService.getLivro(this.idLivro).subscribe(dadosLiv => {
+          this.estaCarregando = true;
+          this.livro = {
+            id: dadosLiv._id,
+            titulo: dadosLiv.titulo,
+            autor: dadosLiv.autor,
+            npaginas: dadosLiv.npaginas,
+          }
+          this.form.setValue({
+            titulo: this.livro.titulo,
+            autor: this.livro.autor,
+            npaginas: this.livro.npaginas,
+          })
+        })
+      }
+      else {
+        this.modo = "criar";
+        this.idLivro = null;
+      }
+    });
+  }
+
+  constructor(public livroService: LivroService, public route: ActivatedRoute ) {}
+
+  OnSalvarLivro() {
+    if(this.form.invalid) return;
+
+    this.estaCarregando = true;
+
+    if (this.modo === 'criar') {
+      this.livroService.adicionarLivro(
+        this.form.value.titulo,
+        this.form.value.autor,
+        this.form.value.npaginas,
+      )
+    }
+    else {
+      this.livroService.atualizarLivro(
+        this.idLivro,
+        this.form.value.titulo,
+        this.form.value.autor,
+        this.form.value.npaginas,
+      )
     }
 
-    this.livroService.adicionarLivro(
-      form.value.id,
-      form.value.titulo,
-      form.value.autor,
-      form.value.npaginas,
-    );
 
-    form.resetForm();
+
+    this.form.reset();
   }
+
 }
