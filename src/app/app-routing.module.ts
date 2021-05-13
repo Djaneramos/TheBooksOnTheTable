@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule,Routes} from '@angular/router';
-
 import {CardlComponent} from './cardl/cardl.component'
 import {BodycComponent}from './bodyc/bodyc.component'
 const routes: Routes = [
