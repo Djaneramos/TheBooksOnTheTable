@@ -4,6 +4,9 @@
   <mat-expansion-panel *ngFor='let livro of collection'>
 
     <mat-expansion-panel-header>{{livro.titulo}}</mat-expansion-panel-header>
+    <div class="livro-imagem">
+      <img [src]="livro.imagemURL" [alt]="livro.nome">
+    </div>
     <p>Autor: {{livro.autor}}</p>
     <p>n° de identificação:{{livro.id}}</p>
     <p>n° de paginas:{{livro.npaginas}}</p>
