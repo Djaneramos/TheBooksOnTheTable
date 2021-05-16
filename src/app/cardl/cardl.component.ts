@@ -13,21 +13,27 @@ export class CardlComponent implements OnInit, OnDestroy {
 
   collection: Livro[] = [];
   private collectionsSubscription: Subscription;
+  public estaCarregando = false;
 
   constructor(public livroService: LivroService ) {}
 
-  ngOnDestroy(): void {
-    this.collectionsSubscription.unsubscribe();
-  }
 
   ngOnInit(): void {
+    this.estaCarregando = true;
     this.livroService.getLivros();
     this.collectionsSubscription = this.livroService
     .getListaDeLivrosAtualizadaObservable()
     .subscribe((collection: Livro[]) => {
+      this.estaCarregando = false;
       this.collection = collection;
     });
   }
+
   onDelete (id: string): void{
-    this.livroService.removerLivro(id);}
+    this.livroService.removerLivro(id);
+  }
+
+  ngOnDestroy(): void {
+    this.collectionsSubscription.unsubscribe();
+  }
 }

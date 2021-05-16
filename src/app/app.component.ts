@@ -10,7 +10,9 @@ export class AppComponent {
   title = 'TheBooksOnTheTable';
   collection:Livro[]=[];
 
-  OnLivroAdd(book){
-    this.collection=[...this.collection,book];
+  OnLivroAdd(livro){
+
+    const newLivro = { ...livro, id: this.collection.length + 1 };
+    this.collection=[...this.collection, livro];
   }
 }
