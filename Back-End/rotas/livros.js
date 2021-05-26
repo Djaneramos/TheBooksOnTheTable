@@ -50,13 +50,30 @@ router.post ('',multer({storage: armazenamento}).single('imagem'), (req, res, ne
   })
 });
 
-router.get('',async (req, res, next) => {
-  const result = await Livro.find({})
-  console.log(result);
+router.get('', (req, res, next) => {
+  const pageSize = +req.query.pagesize;
+  const page = +req.query.page;
+  const consulta = Livro.find();//só executa quando chamamos then
+  let livroEncontrados;
+  if (pageSize && page){
+    consulta
+    .skip(pageSize * (page - 1))
+    .limit(pageSize);
+  }
+  consulta.then(result =>{
+  //console.log(result);
+  livroEncontrados = result;
+  //devolve uma Promise, tratada com o próximo then
+   return Livro.count()
+  })
+  .then((count) => {
   res.status(200).json({
     mensagem: "Tudo OK",
-    livros: result
+    livros:livroEncontrados,
+    //devolvendo o count para o Front
+    maxLivros: count
   });
+})
 });
 
 router.delete ('/:id', (req, res, next) => {
@@ -67,12 +84,22 @@ router.delete ('/:id', (req, res, next) => {
   });
 });
 
-router.put('/:id', (req, res, next) => {
+router.put(
+  '/:id',
+  multer({ storage: armazenamento }).single('imagem'),
+  (req, res, next) => {
+   console.log (req.file);
+   let imagemURL = req.body.imagemURL;//tentamos pegar a URL já existente
+   if (req.file) { //mas se for um arquivo, montamos uma nova
+  const url = req.protocol + "://" + req.get("host");
+  imagemURL = url + "/imagens/" + req.file.filename;
+}
   const livro = new Livro({
     _id: req.params.id,
     titulo: req.body.titulo,
     autor: req.body.autor,
-    npaginas: req.body.npaginas
+    npaginas: req.body.npaginas,
+    imagemURL: imagemURL
   });
   Livro.updateOne({_id: req.params.id}, livro)
   .then((resultado) => {
@@ -80,8 +107,6 @@ router.put('/:id', (req, res, next) => {
     res.status(200).json({mensagem: "Atualização realizada com sucesso"})
   });
 });
-
-
 
 router.get('/:id', (req, res, next) => {
   Livro.findById(req.params.id).then(liv => {

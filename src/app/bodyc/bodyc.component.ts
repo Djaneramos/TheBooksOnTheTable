@@ -51,12 +51,13 @@ export class BodycComponent implements OnInit {
             titulo: dadosLiv.titulo,
             autor: dadosLiv.autor,
             npaginas: dadosLiv.npaginas,
-            imagemURL: null
+            imagemURL: dadosLiv.imagemURL
           }
           this.form.setValue({
             titulo: this.livro.titulo,
             autor: this.livro.autor,
             npaginas: this.livro.npaginas,
+            imagem: this.livro.imagemURL,
           })
         })
       }
@@ -88,7 +89,8 @@ export class BodycComponent implements OnInit {
         this.form.value.titulo,
         this.form.value.autor,
         this.form.value.npaginas,
-      )
+        this.form.value.imagem
+      );
     }
 
 

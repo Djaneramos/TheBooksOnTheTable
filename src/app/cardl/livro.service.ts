@@ -11,21 +11,22 @@ import { Router } from '@angular/router';
 
 export class LivroService {
   private livros: Livro[] = [];
-  private listaLivrosAtualizada = new Subject<Livro[]>();
+  private listaLivrosAtualizada = new Subject<{livro:Livro[],maxLivros:number}>();
 
   constructor (private httpClient: HttpClient, private router: Router){}
 
   getLivro (idLivro: string){
     //return {...this.livros.find((liv) => liv.id === idLivro)};
-    return this.httpClient.get<{_id: string, titulo: string, autor: string, npaginas: string}>(`http://localhost:3000/api/livros/${idLivro}`);
+    return this.httpClient.get<{_id: string, titulo: string, autor: string, npaginas: string, imagemURL: string}>(`http://localhost:3000/api/livros/${idLivro}`);
   }
 
-  getLivros(): void {
-    this.httpClient
-    .get <{mensagem: string, livros:any}>(
-      'http://localhost:3000/api/livros')
+  getLivros(pagesize: number, page: number): void {
+    const parametros = `?pagesize=${pagesize}&page=${page}`;
+    this.httpClient.get <{mensagem: string, livros:any,maxLivros:
+      number}>('http://localhost:3000/api/livros'+ parametros)
       .pipe(map((dados) => {
-        return dados.livros.map(livro => {
+        return {
+          livros:dados.livros.map(livro => {
         return{
           id:livro._id,
           titulo:livro.titulo,
@@ -33,23 +34,43 @@ export class LivroService {
           npaginas:livro.npaginas,
           imagemURL: livro.imagemURL
         }
-      })
+      }),
+      maxLivros: dados.maxLivros
+    }
     }))
-    .subscribe((livros) => {
-      this.livros = livros;
-      this.listaLivrosAtualizada.next([...this.livros]);
+    .subscribe((dados) => {
+      this.livros = dados.livros;
+      this.listaLivrosAtualizada.next({
+        livro:[...this.livros],
+        maxLivros: dados.maxLivros
+      });
     })
   }
 
-  atualizarLivro (id: string, titulo: string, autor: string, npaginas: string ) {
-    const livro: Livro = {id, titulo, autor, npaginas,imagemURL: null};
-    this.httpClient.put(`http://localhost:3000/api/livros/${id}`, livro)
+  atualizarLivro (id: string, titulo: string, autor: string, npaginas: string,imagem: File | string) {
+   // const livro: Livro = {id, titulo, autor, npaginas,imagemURL: null};
+   let livroData: Livro | FormData ;
+   if (typeof(imagem) === 'object'){// é um arquivo, montar um form data
+   livroData = new FormData();
+   livroData.append("id", id);
+   livroData.append('titulo', titulo);
+   livroData.append('autor', autor);
+   livroData.append("npaginas", npaginas);
+   livroData.append('imagem', imagem, titulo);//chave, foto e nome para o arquivo
+   }else{
+    //enviar JSON comum
+    livroData = {
+    id: id,
+    titulo: titulo,
+    autor: autor,
+    npaginas: npaginas,
+    imagemURL: imagem
+     }
+    }
+
+    console.log (typeof(livroData));
+    this.httpClient.put(`http://localhost:3000/api/livros/${id}`, livroData)
     .subscribe((res => {
-      const copia = [...this.livros];
-      const indice = copia.findIndex(liv => liv.id === livro.id);
-      copia[indice] = livro;
-      this.livros = copia;
-      this.listaLivrosAtualizada.next([...this.livros]);
       this.router.navigate(['/'])
     }));
   }
@@ -69,16 +90,6 @@ export class LivroService {
 
     this.httpClient.post<{mensagem: string, livro:Livro}> ('http://localhost:3000/api/livros',dadosLivro).subscribe(
       (dados) => {
-      /*livro.id = dados.id;*/
-      const livro: Livro = {
-        id: dados.livro.id,
-        titulo: titulo,
-        autor: autor,
-        npaginas: npaginas,
-        imagemURL: dados.livro.imagemURL
-      };
-      this.livros.push (livro);
-      this.listaLivrosAtualizada.next([...this.livros]);
       this.router.navigate(['/']);
     });
   }
@@ -87,12 +98,14 @@ export class LivroService {
     return this.listaLivrosAtualizada.asObservable();
   }
 
-  removerLivro (id: string): void{
-    this.httpClient.delete(`http://localhost:3000/api/livros/${id}`).subscribe(() => {
+  removerLivro (id: string){
+    return this.httpClient.delete(`http://localhost:3000/api/livros/${id}`);
+  }
+   /* .subscribe(() => {
     this.livros = this.livros.filter((liv) => {
     return liv.id !== id
     });
     this.listaLivrosAtualizada.next([...this.livros]);
     });
-  }
+  }*/
  }

@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const env = require('./env');
 const livroRoutes = require ('./rotas/livros');
+const usuarioRoutes = require ('./rotas/usuarios');
 
 mongoose.connect(`mongodb+srv://angular:${env.mongoPassword}@cluster0.djhgu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => {
@@ -24,5 +25,6 @@ app.use ((req, res, next) => {
 });
 
 app.use ('/api/livros',livroRoutes);
+app.use ('/api/usuario', usuarioRoutes);
 
 module.exports = app;

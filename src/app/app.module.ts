@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 import{MatInputModule} from '@angular/material/input';
 import{MatCardModule}from'@angular/material/card';
@@ -17,6 +17,9 @@ import { CardlComponent } from './cardl/cardl.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { LivroService } from './cardl/livro.service';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,8 @@ import { LivroService } from './cardl/livro.service';
     HeaderComponent,
     BodycComponent,
     CardlComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,9 +39,11 @@ import { LivroService } from './cardl/livro.service';
     MatCardModule,
     MatButtonModule,
     MatExpansionModule,
+    MatPaginatorModule,
     HttpClientModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
+    FormsModule,
   ],
   providers: [LivroService],
   bootstrap: [AppComponent]

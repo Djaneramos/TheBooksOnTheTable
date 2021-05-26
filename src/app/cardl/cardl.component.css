@@ -7,7 +7,6 @@ mat-expansion-panel {
   width: 100%;
   margin: 1rem;
 }
-
 mat-spinner {
   margin: auto;
 }
@@ -17,4 +16,7 @@ mat-spinner {
   justify-content: center;
 }.livro-imagem > img {
   max-width: 50%;
+}
+mat-paginator {
+  margin-top: 1rem;
 }
