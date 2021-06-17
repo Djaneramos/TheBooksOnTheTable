@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Livro = require('../model/livro');
 const multer = require ("multer");
+const checkAuth = require ('../middleware/check-auth');
 
 const MIME_TYPE_EXTENSAO_MAPA = {
 'image/png': 'png',
@@ -26,7 +27,7 @@ callback(null, `${nome}-${Date.now()}.${extensao}`);
 }
 })
 
-router.post ('',multer({storage: armazenamento}).single('imagem'), (req, res, next) => {
+router.post ('',checkAuth,multer({storage: armazenamento}).single('imagem'), (req, res, next) => {
   const imagemURL = `${req.protocol}://${req.get('host')}`
   const livro = new Livro({
     id: req.body.id,
@@ -76,7 +77,7 @@ router.get('', (req, res, next) => {
 })
 });
 
-router.delete ('/:id', (req, res, next) => {
+router.delete ('/:id',checkAuth,(req, res, next) => {
   console.log("id:", req.params.id);
   Livro.deleteOne ({_id: req.params.id}).then((resultado) => {
   console.log (resultado);
@@ -86,6 +87,7 @@ router.delete ('/:id', (req, res, next) => {
 
 router.put(
   '/:id',
+  checkAuth,
   multer({ storage: armazenamento }).single('imagem'),
   (req, res, next) => {
    console.log (req.file);

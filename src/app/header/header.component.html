@@ -2,12 +2,10 @@
   <span><a routerLink="/">Livros</a></span>
   <span class="separador"></span>
   <ul>
-    <li><a mat-button routerLink="/criar" routerLinkActive="mat-accent">Novo Livro</a></li>
-    <li><a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a></li>
-    <li><a mat-button routerLink="/signup" routerLinkActive="mat-accent">Cadastrar</a></li>
+    <li *ngIf="autenticado"><a mat-button routerLink="/criar" routerLinkActive="mat-accent">Novo Livro</a></li>
+    <li *ngIf="!autenticado"><a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a></li>
+    <li *ngIf="!autenticado"><a mat-button routerLink="/signup" routerLinkActive="mat-accent">Cadastrar</a></li>
+    <li *ngIf="autenticado"><button (click)="onLogout()" mat-button>Logout</button></li>
   </ul>
 </mat-toolbar>
-<mat-card>
-  <h1>Olá {{ nomeUsuario }}</h1>
-  <p>Bem-Vindo a sua livraria</p>
-</mat-card>
+
